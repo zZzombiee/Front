@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MyCategories from "@/components/Category";
 import PlusSign from "../../public/Icons/PlusSign";
 import OneRecord from "../components/OneRecord";
@@ -8,8 +8,22 @@ import { FaAngleRight } from "react-icons/fa6";
 import RentIcon from "../../public/Icons/RentIcon";
 import FoodExpense from "../../public/Icons/FoodExpenseIcon";
 import AddRecord from "@/components/AddRecord";
-import { Categories } from "@/components/Categories";
+import axios from "axios";
 
+const categories = [
+  "Food & Drinks",
+  "Lending & Renting",
+  "Shopping",
+  "Housing",
+  "Transportation",
+  "Vehicle",
+  "Life & Entertainment",
+  "Communication, PC",
+  "Financial expenses",
+  "Investments",
+  "Income",
+  "Others",
+];
 const records = [
   [
     {
@@ -104,13 +118,47 @@ const records = [
     },
   ],
 ];
-
-const Home = () => {
+let checked = [
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+];
+const Records = () => {
   const [showAdd, setShowAdd] = useState(false);
 
   const [selected, setSelected] = useState("All");
   const [myRecords, setRecords] = useState(records);
 
+  const [selectedCategories, setSelectedCategories] = useState(categories);
+  const [selectedEyes, setSelectedEyes] = useState(checked);
+
+  const [checkedCategories, setCheckedCategories] = useState(categories);
+
+  const handleCategory = (input, index) => {
+    let myCategories = [...selectedEyes];
+    if (input == "true") {
+      myCategories[index] = "false";
+    } else {
+      myCategories[index] = "true";
+    }
+    setSelectedEyes(myCategories);
+    let filteredCategories = [];
+    for (let i = 0; i < categories.length; i++) {
+      if (selectedEyes[i] == "true") {
+        filteredCategories.push(selectedCategories[i]);
+      }
+    }
+    setCheckedCategories();
+  };
   const handleExpense = () => {
     const filtered = records.map((day) =>
       day.filter((oneRecord) => oneRecord.money.includes("-"))
@@ -121,6 +169,7 @@ const Home = () => {
     const filtered = records.map((day) =>
       day.filter((oneRecord) => oneRecord.money.includes("+"))
     );
+    console.log(filtered);
     setRecords(filtered);
   };
   const handleAll = () => {
@@ -133,8 +182,12 @@ const Home = () => {
   const handleAdd = () => {
     setShowAdd(!showAdd);
   };
-
+  const addRecord = () => {
+    axios.get("http://localhost:8000/transaction", {});
+  };
+  // const opacity = showAdd === false ? "opacity-100" : "opacity-100";
   return (
+    // <div className="flex justify-center items-center flex-col">
     <div>
       {showAdd && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
@@ -142,7 +195,7 @@ const Home = () => {
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
-        <Navbar />
+        <Navbar onClick={addRecord} />
 
         <div className="flex gap-6">
           <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl h-fit border border-[#E5E7EB]">
@@ -194,7 +247,28 @@ const Home = () => {
                 Expense
               </div>
             </div>
-            <Categories />
+            <div className="flex flex-col gap-4">
+              <div className="flex justify-between">
+                <p className="font-semibold text-base">Category</p>
+                <p className="font-normal text-base opacity-20"> Clear </p>
+              </div>
+              <div className="flex flex-col gap-2">
+                {categories.map((category1, index) => {
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => handleCategory(selectedEyes[index], index)}
+                    >
+                      <MyCategories categoryName={category1} />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex gap-2 py-1.5 pl-3 items-center">
+                <PlusSign color={"#0166FF"} />
+                <p>Add category </p>
+              </div>
+            </div>
           </div>
           <div className="w-[894px] flex flex-col gap-4">
             <div className="flex justify-between">
@@ -208,7 +282,7 @@ const Home = () => {
                 </div>
               </div>
               <select className="w-[180px] py-3 px-4 rounded-lg font-semibold text-base text-[#1F2937] border border-[#D1D5DB]">
-                <option value={selected}>Newest First</option>
+                <option selected>Newest First</option>
                 <option> Latest First </option>
               </select>
             </div>
@@ -253,4 +327,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Records;
