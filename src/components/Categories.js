@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import MyCategories from "./Category";
 import PlusSign from "../../public/Icons/PlusSign";
+import AddCategory from "./AddCategory";
 const categoryURL = "http://localhost:8000/category";
 
 // const categories = [
@@ -21,9 +22,7 @@ const categoryURL = "http://localhost:8000/category";
 
 export const Categories = () => {
   const [categories, setCategories] = useState([]);
-  const [categoryName, setCategoryName] = useState("");
-  const [description, setDescription] = useState("");
-  const [img, setImg] = useState("");
+
   const [selectedEyes, setSelectedEyes] = useState("true");
   const [checkedCategories, setCheckedCategories] = useState(categories);
   const [selectedCategories, setSelectedCategories] = useState(categories);
@@ -43,23 +42,6 @@ export const Categories = () => {
       }
     }
     setCheckedCategories();
-  };
-
-  const addCategory = async () => {
-    await axios
-      .post(categoryURL, {
-        categoryName: categoryName,
-        description: description,
-        img: img,
-      })
-      .then(function (response) {
-        console.log(response);
-        getCategories();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    console.log(categoryName, description);
   };
 
   const getCategories = () => {
@@ -97,32 +79,8 @@ export const Categories = () => {
             );
           })}
         </div>
-        <label className="flex gap-4 flex-col">
-          <input
-            className="input input-bordered w-full max-w-xs"
-            type="text"
-            placeholder="categoryName"
-            onChange={(e) => setCategoryName(e.target.value)}
-          ></input>
-          <input
-            className="input input-bordered w-full max-w-xs"
-            type="text"
-            placeholder="description"
-            onChange={(e) => setDescription(e.target.value)}
-          ></input>
-          <input
-            className="input input-bordered w-full max-w-xs"
-            type="text"
-            placeholder="img"
-            onChange={(e) => setImg(e.target.value)}
-          ></input>
-        </label>
-        <div className="flex gap-2 py-1.5 pl-3 items-center">
-          <button className="btn mx-10" onClick={addCategory}>
-            <PlusSign color={"#0166FF"} />
-            add category
-          </button>
-        </div>
+
+        <AddCategory />
       </div>
     </div>
   );

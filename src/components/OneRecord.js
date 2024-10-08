@@ -1,10 +1,17 @@
+import { categoryIconByCategoryName } from "@/util/findcategoryIcon";
 import moment from "moment";
 
 const OneRecord = (props) => {
   const { recordname, image, createdat, amount, transaction_type } = props;
+
+  const icon = categoryIconByCategoryName(props);
+
   let iconColor = "";
   let color = "";
   let symbol = "";
+
+  console.log(icon);
+
   if (transaction_type === "EXP") {
     (iconColor = "#FF4545"), (symbol = "-"), (color = "#F54949");
   } else {
