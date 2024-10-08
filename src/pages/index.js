@@ -1,130 +1,92 @@
 import Navbar from "../components/Navbar";
-import { useState } from "react";
-import MyCategories from "@/components/Category";
+import { useEffect, useState } from "react";
 import PlusSign from "../../public/Icons/PlusSign";
-import OneRecord from "../components/OneRecord";
-import { FaChevronLeft, FaSearchengin } from "react-icons/fa6";
-import { FaAngleRight } from "react-icons/fa6";
-import RentIcon from "../../public/Icons/RentIcon";
-import FoodExpense from "../../public/Icons/FoodExpenseIcon";
 import AddRecord from "@/components/AddRecord";
 import { Categories } from "@/components/Categories";
+import Records from "../components/Records";
+import RentIcon from "../../public/Icons/RentIcon";
+import FoodExpense from "../../public/Icons/FoodExpenseIcon";
+import axios from "axios";
 
-const records = [
-  [
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-  ],
-  [
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-  ],
-];
+// const records = [
+//   [
+//     {
+//       color: "#23E01F",
+//       image: <RentIcon />,
+//       createdat: "14:00",
+//       description: "Lending & Renting",
+//       amount: "+ 1,000₮",
+//       iconColor: "#0166FF",
+//     },
+//   ],
+//   [
+//     {
+//       color: "#23E01F",
+//       image: <FoodExpense />,
+//       createdat: "14:00",
+//       description: "Lending & Renting",
+//       amount: "+ 1,000₮",
+//       iconColor: "#FF4545",
+//     },
+//   ],
+// ];
 
+// - [ ] Category img
+// - [ ] Record createdat
+// - [ ] Record type
+// - [ ] Record amount
+// - [ ] Record name
+// - [ ] Category name
+
+const record = {
+  amount: 150000,
+  categoryid: 1,
+  createdat: "2024-10-06T18:37:51.150Z",
+  description: "weekly fod",
+  recordid: 10,
+  recordname: "food",
+  transaction_type: "EXP",
+  userid: 2,
+};
 const Home = () => {
-  const [showAdd, setShowAdd] = useState(false);
+  const [myRecords, setRecords] = useState([]);
+  const [filteredRecords, setFilteredRecords] = useState([]);
 
+  const getRecords = () => {
+    const userid = localStorage.getItem("userid");
+
+    axios
+      .post("http://localhost:8000/gettransaction", {
+        userID: userid,
+      })
+      .then(function (response) {
+        setRecords(response.data.data);
+        setFilteredRecords(response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => getRecords(), []);
+
+  const [showAdd, setShowAdd] = useState(false);
   const [selected, setSelected] = useState("All");
-  const [myRecords, setRecords] = useState(records);
 
   const handleExpense = () => {
-    const filtered = records.map((day) =>
-      day.filter((oneRecord) => oneRecord.money.includes("-"))
+    const filtered = myRecords.filter((record) =>
+      record.transaction_type.includes("EXP")
     );
-    setRecords(filtered);
+    setFilteredRecords(filtered);
   };
   const handleIncome = () => {
-    const filtered = records.map((day) =>
-      day.filter((oneRecord) => oneRecord.money.includes("+"))
+    const filtered = myRecords.filter((record) =>
+      record.transaction_type.includes("INC")
     );
-    setRecords(filtered);
+    setFilteredRecords(filtered);
   };
   const handleAll = () => {
-    setRecords(records);
+    setFilteredRecords(myRecords);
   };
   const handleChange = (option) => {
     setSelected(option);
@@ -143,7 +105,6 @@ const Home = () => {
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
         <Navbar />
-
         <div className="flex gap-6">
           <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl h-fit border border-[#E5E7EB]">
             <div className="flex flex-col gap-6">
@@ -196,57 +157,7 @@ const Home = () => {
             </div>
             <Categories />
           </div>
-          <div className="w-[894px] flex flex-col gap-4">
-            <div className="flex justify-between">
-              <div className="flex gap-4 items-center">
-                <div className="w-8 h-8 rounded-lg p-1.5 bg-[#E5E7EB]">
-                  <FaChevronLeft />
-                </div>
-                <p className="font-normal text-base"> Last 30 Days</p>
-                <div className="w-8 h-8 rounded-lg p-1.5 bg-[#E5E7EB]">
-                  <FaAngleRight />
-                </div>
-              </div>
-              <select className="w-[180px] py-3 px-4 rounded-lg font-semibold text-base text-[#1F2937] border border-[#D1D5DB]">
-                <option value={selected}>Newest First</option>
-                <option> Latest First </option>
-              </select>
-            </div>
-            <div className="flex flex-col gap-3">
-              <p className="font-semibold text-base"> Today </p>
-              <div className="flex flex-col gap-3 mb-3">
-                {myRecords[0].map((recordToday, index) => {
-                  return (
-                    <OneRecord
-                      key={index}
-                      text={recordToday.text}
-                      image={recordToday.image}
-                      time={recordToday.time}
-                      color={recordToday.color}
-                      money={recordToday.money}
-                      iconColor={recordToday.iconColor}
-                    />
-                  );
-                })}
-              </div>
-              <p className="font-semibold text-base"> Yesterday </p>
-              <div className="flex flex-col gap-3">
-                {myRecords[1].map((recordToday, index) => {
-                  return (
-                    <OneRecord
-                      key={index}
-                      text={recordToday.text}
-                      image={recordToday.image}
-                      time={recordToday.time}
-                      color={recordToday.color}
-                      money={recordToday.money}
-                      iconColor={recordToday.iconColor}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+          <Records selected={selected} myRecords={filteredRecords} />
         </div>
       </div>
     </div>
