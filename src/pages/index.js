@@ -38,19 +38,24 @@ import axios from "axios";
 // - [ ] Record name
 // - [ ] Category name
 
-const record = {
-  amount: 150000,
-  categoryid: 1,
-  createdat: "2024-10-06T18:37:51.150Z",
-  description: "weekly fod",
-  recordid: 10,
-  recordname: "food",
-  transaction_type: "EXP",
-  userid: 2,
-};
+// const record = {
+//   amount: 150000,
+//   categoryid: 1,
+//   createdat: "2024-10-06T18:37:51.150Z",
+//   description: "weekly fod",
+//   recordid: 10,
+//   recordname: "food",
+//   transaction_type: "EXP",
+//   userid: 2,
+// };
 const Home = () => {
   const [myRecords, setRecords] = useState([]);
   const [filteredRecords, setFilteredRecords] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  const hadnleCategories = (category) => {
+    setCategories(category);
+  };
 
   const getRecords = () => {
     const userid = localStorage.getItem("userid");
@@ -155,9 +160,16 @@ const Home = () => {
                 Expense
               </div>
             </div>
-            <Categories />
+            <Categories
+              hadnleCategories={hadnleCategories}
+              categories={categories}
+            />
           </div>
-          <Records selected={selected} myRecords={filteredRecords} />
+          <Records
+            selected={selected}
+            myRecords={filteredRecords}
+            categories={categories}
+          />
         </div>
       </div>
     </div>

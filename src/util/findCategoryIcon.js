@@ -12,18 +12,18 @@ const icons = [
   {
     color: "#F54949",
     image: <FoodExpense />,
-    name: "Foods and Drinks",
+    name: "Food",
     iconColor: "#FF4545",
   },
   {
     color: "#F54949",
     image: <Shopping />,
-    name: "Shopping",
+    name: "Outfit",
     iconColor: "#FF4545",
   },
 ];
 
 export const categoryIconByCategoryName = (props) => {
-  const icon = icons.find((icon) => icon.name === props.categoryname);
+  const icon = icons.find((icon) => icon.name === props.recordname);
   return icon;
 };

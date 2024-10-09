@@ -3,8 +3,14 @@ import OneRecord from "../components/OneRecord";
 import { FaChevronLeft, FaAngleRight } from "react-icons/fa6";
 
 const Records = (prams) => {
-  const { selected, myRecords } = prams;
-  console.log(myRecords);
+  const { selected, myRecords, categories } = prams;
+
+  const filteredRecord = myRecords.filter((record) => {
+    const category = categories.find(
+      (category) => category.categoryid === record.categoryid
+    );
+    return category.selected;
+  });
 
   return (
     <div className="w-[894px] flex flex-col gap-4">
@@ -26,12 +32,11 @@ const Records = (prams) => {
       <div className="flex flex-col gap-3">
         <p className="font-semibold text-base"> Today </p>
         <div className="flex flex-col gap-3 mb-3">
-          {myRecords.map((record, index) => {
+          {filteredRecord.map((record, index) => {
             return (
               <OneRecord
                 key={index}
                 recordname={record.categoryname}
-                image={record.category_img}
                 createdat={record.createdat}
                 amount={record.amount}
                 transaction_type={record.transaction_type}

@@ -2,7 +2,7 @@ import { categoryIconByCategoryName } from "@/util/findcategoryIcon";
 import moment from "moment";
 
 const OneRecord = (props) => {
-  const { recordname, image, createdat, amount, transaction_type } = props;
+  const { recordname, createdat, amount, transaction_type } = props;
 
   const icon = categoryIconByCategoryName(props);
 
@@ -10,11 +10,9 @@ const OneRecord = (props) => {
   let color = "";
   let symbol = "";
 
-  console.log(icon);
-
   if (transaction_type === "EXP") {
-    (iconColor = "#FF4545"), (symbol = "-"), (color = "#F54949");
-  } else {
+    (iconColor = "#FF4545"), (symbol = "-"), (color = "red");
+  } else if (transaction_type === "INC") {
     (iconColor = "#0166FF"), (symbol = "+"), (color = "#23E01F");
   }
 
@@ -27,7 +25,7 @@ const OneRecord = (props) => {
             backgroundColor: iconColor,
           }}
         >
-          {image}
+          {icon?.image}
         </div>
 
         <div className="flex flex-col">
@@ -37,9 +35,14 @@ const OneRecord = (props) => {
           </p>
         </div>
       </div>
-      <p className={`font-semibold text-base text-[${color}]`}>
+      <p
+        className={`font-semibold text-base`}
+        style={{
+          color: color,
+        }}
+      >
         {symbol}
-        {amount}$
+        {amount} ₮
       </p>
     </div>
   );

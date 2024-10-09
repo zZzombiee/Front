@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import MyCategories from "./Category";
+import Category from "./Category";
 import PlusSign from "../../public/Icons/PlusSign";
 import AddCategory from "./AddCategory";
 const categoryURL = "http://localhost:8000/category";
@@ -20,38 +20,20 @@ const categoryURL = "http://localhost:8000/category";
 //   "Others",
 // ];
 
-export const Categories = () => {
-  const [categories, setCategories] = useState([]);
-
-  const [selectedEyes, setSelectedEyes] = useState("true");
-  const [checkedCategories, setCheckedCategories] = useState(categories);
-  const [selectedCategories, setSelectedCategories] = useState(categories);
-
-  const handleCategory = (input, index) => {
-    let myCategories = [...selectedEyes];
-    if (input == "true") {
-      myCategories[index] = "false";
-    } else {
-      myCategories[index] = "true";
-    }
-    setSelectedEyes(myCategories);
-    let filteredCategories = [];
-    for (let i = 0; i < categories.length; i++) {
-      if (selectedEyes[i] == "true") {
-        filteredCategories.push(selectedCategories[i]);
-      }
-    }
-    setCheckedCategories();
-  };
+export const Categories = (props) => {
+  const { categories, hadnleCategories } = props;
 
   const getCategories = () => {
     axios
       .get(categoryURL)
       .then(function (response) {
-        const categoryName = response.data.categories.map(
-          (category) => category.categoryname
-        );
-        setCategories(categoryName);
+        const categories = response.data.categories.map((category) => {
+          return {
+            ...category,
+            selected: true,
+          };
+        });
+        hadnleCategories(categories);
       })
       .catch(function (error) {
         console.log(error);
@@ -59,6 +41,21 @@ export const Categories = () => {
   };
 
   useEffect(() => getCategories(), []);
+
+  const onSelectCategory = (selectedCategory) => {
+    const updatedCategories = categories.map((category) => {
+      if (category.categoryid === selectedCategory.categoryid) {
+        return {
+          ...category,
+          selected: !category.selected,
+        };
+      }
+
+      return category;
+    });
+
+    hadnleCategories(updatedCategories);
+  };
 
   return (
     <div className="flex gap-3 flex-col">
@@ -68,20 +65,44 @@ export const Categories = () => {
           <p className="font-normal text-base opacity-20"> Clear </p>
         </div>
         <div className="flex flex-col gap-2">
-          {categories.map((category1, index) => {
-            return (
-              <div
-                key={index}
-                onClick={() => handleCategory(selectedEyes[index], index)}
-              >
-                <MyCategories categoryName={category1} />
-              </div>
-            );
-          })}
+          {categories.map((category, index) => (
+            <Category
+              categoryName={category.categoryname}
+              selected={category.selected}
+              key={index}
+              onSelect={() => onSelectCategory(category)}
+            />
+          ))}
         </div>
-
         <AddCategory />
       </div>
     </div>
   );
 };
+
+// const categories = [
+//   {
+//     categoryid: 1,
+//     categoryname: "Food",
+//     description: "This is a food",
+//     createdat: "2024-09-26T19:56:35.338Z",
+//     updatedat: "2024-09-26T19:56:35.338Z",
+//     category_img: "Icon",
+//     selected:true
+//   },
+// ];
+
+// const categories = response.data.categories.map((category) => {
+//   return {
+//     ...category,
+//     selected: true,
+//   };
+
+// const numbers = [1, 1, 2];
+
+// const filteredNumbers = numbers.filter((number) => {
+//   const category = formattedCategories.find(
+//     (category) => category.id === number.categoryId
+//   );
+//   return category.selected;
+// });

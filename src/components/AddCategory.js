@@ -43,28 +43,21 @@ const AddCategory = (props) => {
           <label className="flex gap-4">
             <select
               className="bg-[#F9FAFB] py-3 w-20 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
+              defaultValue="selected"
               onChange={(e) => setImg(e.target.value)}
             >
-              <option value="" disabled selected>
+              <option value="selected" disabled selected>
                 Icons
               </option>
               <option value="shopping">Shopping</option>
               <option value="taxi">Taxi</option>
             </select>
-
             <input
               className="input input-bordered w-full "
               type="text"
               placeholder="Category Name"
               onChange={(e) => setCategoryName(e.target.value)}
             />
-
-            {/* <input
-              className="input input-bordered w-full max-w-xs"
-              type="text"
-              placeholder="Description"
-              onChange={(e) => setDescription(e.target.value)}
-            /> */}
           </label>
           <div className="pt-8">
             <button className="btn w-full" onClick={addCategory}>
