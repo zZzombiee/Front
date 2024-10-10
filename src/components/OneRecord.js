@@ -1,8 +1,8 @@
-import { categoryIconByCategoryName } from "@/util/findcategoryIcon";
+import { categoryIconByCategoryName } from "@/util/findCategoryIcon";
 import moment from "moment";
 
 const OneRecord = (props) => {
-  const { recordname, createdat, amount, transaction_type } = props;
+  const { recordname, createdat, amount, transaction_type, remove } = props;
 
   const icon = categoryIconByCategoryName(props);
 
@@ -31,19 +31,22 @@ const OneRecord = (props) => {
         <div className="flex flex-col">
           <p className="font-normal text-base">{recordname}</p>
           <p className="font-normal text-xs text-[#6B7280]">
-            {moment({ createdat }).format("llll")}
+            {moment(createdat).format("llll")}
           </p>
         </div>
       </div>
-      <p
-        className={`font-semibold text-base`}
-        style={{
-          color: color,
-        }}
-      >
-        {symbol}
-        {amount} ₮
-      </p>
+      <div className="flex gap-4">
+        <p
+          className={`font-semibold text-base`}
+          style={{
+            color: color,
+          }}
+        >
+          {symbol}
+          {amount} ₮
+        </p>
+        <button onClick={remove}>X</button>
+      </div>
     </div>
   );
 };

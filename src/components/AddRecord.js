@@ -1,21 +1,17 @@
 import { IoClose } from "react-icons/io5";
 import { useEffect, useState } from "react";
-import FoodExpense from "../../public/Icons/FoodExpenseIcon";
-import Drink from "../../public/Icons/Drink";
-import Gift from "../../public/Icons/Gift";
-import Shopping from "../../public/Icons/Shopping";
-import Taxi from "../../public/Icons/Taxi";
-import RentIcon from "../../public/Icons/RentIcon";
+
 import axios from "axios";
 
 const AddRecord = (props) => {
-  const { onCloseModal } = props;
+  const { onCloseModal, getRecords } = props;
   const [incomeExpense, setIncomeExpense] = useState("EXP");
   const [categories, setCategories] = useState([]);
   const [amount, setAmount] = useState("");
   const [selectedCategory, setSelectedCategory] = useState();
   const [description, setDescription] = useState();
   const [categoryId, setCategoryId] = useState([]);
+  const [recordName, setRecordName] = useState("");
 
   const getCategories = () => {
     axios
@@ -37,7 +33,7 @@ const AddRecord = (props) => {
     axios
       .post("http://localhost:8000/transaction", {
         userID: localStorage.getItem("userid"),
-        recordName: categories,
+        recordName: selectedCategory,
         amount: amount,
         transaction_type: incomeExpense,
         description: description,
@@ -50,7 +46,6 @@ const AddRecord = (props) => {
         console.log(error);
       });
   };
-  console.log(selectedCategory);
 
   useEffect(() => getCategories(), []);
 
@@ -76,8 +71,9 @@ const AddRecord = (props) => {
   };
 
   const handleAdd = () => {
-    onCloseModal;
+    onCloseModal();
     postTransaction();
+    getRecords();
   };
 
   const Expensebackground = incomeExpense === "EXP" ? "#0166FF" : "#F3F4F6";
@@ -87,7 +83,7 @@ const AddRecord = (props) => {
   const textColorExpense = incomeExpense === "EXP" ? "text-white" : "text-base";
 
   return (
-    <div className="w-[792px] flex flex-col rounded-xl  border-b border-[#E2E8F0] bg-slate-200">
+    <div className="w-[792px] flex flex-col rounded-xl border-b border-[#E2E8F0] bg-slate-200 ">
       <div className="py-5 px-6 flex justify-between">
         <p className="font-semibold text-xl">Add Record</p>
         <IoClose size={24} onClick={onCloseModal} />

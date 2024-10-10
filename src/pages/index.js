@@ -4,50 +4,8 @@ import PlusSign from "../../public/Icons/PlusSign";
 import AddRecord from "@/components/AddRecord";
 import { Categories } from "@/components/Categories";
 import Records from "../components/Records";
-import RentIcon from "../../public/Icons/RentIcon";
-import FoodExpense from "../../public/Icons/FoodExpenseIcon";
 import axios from "axios";
 
-// const records = [
-//   [
-//     {
-//       color: "#23E01F",
-//       image: <RentIcon />,
-//       createdat: "14:00",
-//       description: "Lending & Renting",
-//       amount: "+ 1,000₮",
-//       iconColor: "#0166FF",
-//     },
-//   ],
-//   [
-//     {
-//       color: "#23E01F",
-//       image: <FoodExpense />,
-//       createdat: "14:00",
-//       description: "Lending & Renting",
-//       amount: "+ 1,000₮",
-//       iconColor: "#FF4545",
-//     },
-//   ],
-// ];
-
-// - [ ] Category img
-// - [ ] Record createdat
-// - [ ] Record type
-// - [ ] Record amount
-// - [ ] Record name
-// - [ ] Category name
-
-// const record = {
-//   amount: 150000,
-//   categoryid: 1,
-//   createdat: "2024-10-06T18:37:51.150Z",
-//   description: "weekly fod",
-//   recordid: 10,
-//   recordname: "food",
-//   transaction_type: "EXP",
-//   userid: 2,
-// };
 const Home = () => {
   const [myRecords, setRecords] = useState([]);
   const [filteredRecords, setFilteredRecords] = useState([]);
@@ -105,7 +63,10 @@ const Home = () => {
     <div>
       {showAdd && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
-          <AddRecord onCloseModal={handleAdd} />
+          <AddRecord
+            onCloseModal={() => handleAdd()}
+            getRecords={() => getRecords()}
+          />
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
@@ -169,6 +130,7 @@ const Home = () => {
             selected={selected}
             myRecords={filteredRecords}
             categories={categories}
+            getRecords={() => getRecords()}
           />
         </div>
       </div>

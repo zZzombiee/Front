@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import OneRecord from "../components/OneRecord";
 import { FaChevronLeft, FaAngleRight } from "react-icons/fa6";
+import axios from "axios";
 
 const Records = (prams) => {
-  const { selected, myRecords, categories } = prams;
+  const { selected, myRecords, categories, getRecords } = prams;
 
   const filteredRecord = myRecords.filter((record) => {
     const category = categories.find(
@@ -11,6 +12,18 @@ const Records = (prams) => {
     );
     return category.selected;
   });
+
+  const removeRecord = (id) => {
+    axios
+      .post(`http://localhost:8000/removeTransaction`, { recordid: id })
+      .then(function (response) {
+        console.log(response);
+        getRecords();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="w-[894px] flex flex-col gap-4">
@@ -40,6 +53,7 @@ const Records = (prams) => {
                 createdat={record.createdat}
                 amount={record.amount}
                 transaction_type={record.transaction_type}
+                remove={() => removeRecord(record.recordid)}
               />
             );
           })}

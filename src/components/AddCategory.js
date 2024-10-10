@@ -4,9 +4,40 @@ import PlusSign from "../../public/Icons/PlusSign";
 import Shopping from "../../public/Icons/Shopping";
 import Taxi from "../../public/Icons/Taxi";
 const categoryURL = "http://localhost:8000/category";
+import FoodExpense from "../../public/Icons/FoodExpenseIcon";
+import RentIcon from "../../public/Icons/RentIcon";
+import Drink from "../../public/Icons/Drink";
+import Gift from "../../public/Icons/Gift";
+
+const icons = [
+  {
+    image: <RentIcon />,
+    name: "Lending & Renting",
+  },
+  {
+    image: <FoodExpense />,
+    name: "Food & Drinks",
+  },
+  {
+    image: <Shopping />,
+    name: "Shopping",
+  },
+  {
+    image: <Drink />,
+    name: "Drink",
+  },
+  {
+    image: <Gift />,
+    name: "Gift",
+  },
+  {
+    image: <Taxi />,
+    name: "Vehicle",
+  },
+];
 
 const AddCategory = (props) => {
-  const {} = props;
+  const { getCategories } = props;
   const [categoryName, setCategoryName] = useState("");
   const [description, setDescription] = useState("");
   const [img, setImg] = useState("");
@@ -25,7 +56,6 @@ const AddCategory = (props) => {
       .catch(function (error) {
         console.log(error);
       });
-    console.log(categoryName, description);
   };
 
   return (
@@ -49,8 +79,13 @@ const AddCategory = (props) => {
               <option value="selected" disabled selected>
                 Icons
               </option>
-              <option value="shopping">Shopping</option>
-              <option value="taxi">Taxi</option>
+              {icons.map((icon, index) => (
+                <option key={index} value={icon.name}>
+                  {icon.name}
+                </option>
+              ))}
+              {/* <option value="shopping">Shopping</option>
+              <option value="taxi">Taxi</option> */}
             </select>
             <input
               className="input input-bordered w-full "
@@ -59,10 +94,12 @@ const AddCategory = (props) => {
               onChange={(e) => setCategoryName(e.target.value)}
             />
           </label>
-          <div className="pt-8">
-            <button className="btn w-full" onClick={addCategory}>
-              add
-            </button>
+          <div className="pt-8 modal-action min-w-full">
+            <form method="dialog min-w-full">
+              <button className="btn min-w-full" onClick={addCategory}>
+                add
+              </button>
+            </form>
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">

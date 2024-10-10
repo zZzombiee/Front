@@ -1,25 +1,34 @@
 import FoodExpense from "../../public/Icons/FoodExpenseIcon";
 import RentIcon from "../../public/Icons/RentIcon";
 import Shopping from "../../public/Icons/Shopping";
+import Drink from "../../public/Icons/Drink";
+import Gift from "../../public/Icons/Gift";
+import Taxi from "../../public/Icons/Taxi";
 
 const icons = [
   {
-    color: "#23E01F",
     image: <RentIcon />,
     name: "Lending & Renting",
-    iconColor: "#0166FF",
   },
   {
-    color: "#F54949",
     image: <FoodExpense />,
-    name: "Food",
-    iconColor: "#FF4545",
+    name: "Food & Drinks",
   },
   {
-    color: "#F54949",
     image: <Shopping />,
-    name: "Outfit",
-    iconColor: "#FF4545",
+    name: "Shopping",
+  },
+  {
+    image: <Drink />,
+    name: "Drink",
+  },
+  {
+    image: <Gift />,
+    name: "Gift",
+  },
+  {
+    image: <Taxi />,
+    name: "Vehicle",
   },
 ];
 

@@ -42,6 +42,18 @@ export const Categories = (props) => {
 
   useEffect(() => getCategories(), []);
 
+  const removeCategory = (id) => {
+    axios
+      .post(`http://localhost:8000/removeCategory`, { categoryId: id })
+      .then(function (response) {
+        console.log(response);
+        getCategories();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const onSelectCategory = (selectedCategory) => {
     const updatedCategories = categories.map((category) => {
       if (category.categoryid === selectedCategory.categoryid) {
@@ -71,10 +83,11 @@ export const Categories = (props) => {
               selected={category.selected}
               key={index}
               onSelect={() => onSelectCategory(category)}
+              remove={() => removeCategory(category.categoryid)}
             />
           ))}
         </div>
-        <AddCategory />
+        <AddCategory getCategories={() => getCategories()} />
       </div>
     </div>
   );
