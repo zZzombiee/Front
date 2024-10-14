@@ -10,6 +10,7 @@ const Home = () => {
   const [myRecords, setRecords] = useState([]);
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [sort, setSort] = useState("");
 
   const hadnleCategories = (category) => {
     setCategories(category);
@@ -31,7 +32,7 @@ const Home = () => {
       });
   };
 
-  useEffect(() => getRecords(), []);
+  useEffect(() => getRecords(), [sort]);
 
   const [showAdd, setShowAdd] = useState(false);
   const [selected, setSelected] = useState("All");
@@ -54,23 +55,26 @@ const Home = () => {
   const handleChange = (option) => {
     setSelected(option);
   };
-
+  const handleSort = (option) => {
+    setSort(option);
+  };
   const handleAdd = () => {
     setShowAdd(!showAdd);
   };
+  console.log(sort);
 
   return (
     <div>
       {showAdd && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
           <AddRecord
-            onCloseModal={() => handleAdd()}
             getRecords={() => getRecords()}
+            onCloseModal={() => handleAdd()}
           />
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
-        <Navbar />
+        <Navbar handleAdd={() => handleAdd()} />
         <div className="flex gap-6">
           <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl h-fit border border-[#E5E7EB]">
             <div className="flex flex-col gap-6">
@@ -127,10 +131,10 @@ const Home = () => {
             />
           </div>
           <Records
-            selected={selected}
             myRecords={filteredRecords}
             categories={categories}
             getRecords={() => getRecords()}
+            sort={sort}
           />
         </div>
       </div>

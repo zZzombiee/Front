@@ -36,3 +36,5 @@ export const categoryIconByCategoryName = (props) => {
   const icon = icons.find((icon) => icon.name === props.recordname);
   return icon;
 };
+
+export default icons;

@@ -4,13 +4,13 @@ import { FaChevronLeft, FaAngleRight } from "react-icons/fa6";
 import axios from "axios";
 
 const Records = (prams) => {
-  const { selected, myRecords, categories, getRecords } = prams;
+  const { myRecords, categories, getRecords, sort } = prams;
 
   const filteredRecord = myRecords.filter((record) => {
     const category = categories.find(
       (category) => category.categoryid === record.categoryid
     );
-    return category.selected;
+    return category?.selected;
   });
 
   const removeRecord = (id) => {
@@ -38,7 +38,9 @@ const Records = (prams) => {
           </div>
         </div>
         <select className="w-[180px] py-3 px-4 rounded-lg font-semibold text-base text-[#1F2937] border border-[#D1D5DB]">
-          <option value={selected}>Newest First</option>
+          <option value={sort} checked={sort === "new"}>
+            Newest First
+          </option>
           <option> Latest First </option>
         </select>
       </div>

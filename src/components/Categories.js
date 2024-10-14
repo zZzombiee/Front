@@ -5,21 +5,6 @@ import PlusSign from "../../public/Icons/PlusSign";
 import AddCategory from "./AddCategory";
 const categoryURL = "http://localhost:8000/category";
 
-// const categories = [
-//   "Food & Drinks",
-//   "Lending & Renting",
-//   "Shopping",
-//   "Housing",
-//   "Transportation",
-//   "Vehicle",
-//   "Life & Entertainment",
-//   "Communication, PC",
-//   "Financial expenses",
-//   "Investments",
-//   "Income",
-//   "Others",
-// ];
-
 export const Categories = (props) => {
   const { categories, hadnleCategories } = props;
 
@@ -59,7 +44,7 @@ export const Categories = (props) => {
       if (category.categoryid === selectedCategory.categoryid) {
         return {
           ...category,
-          selected: !category.selected,
+          selected: !category?.selected,
         };
       }
 
@@ -80,7 +65,7 @@ export const Categories = (props) => {
           {categories.map((category, index) => (
             <Category
               categoryName={category.categoryname}
-              selected={category.selected}
+              selected={category?.selected}
               key={index}
               onSelect={() => onSelectCategory(category)}
               remove={() => removeCategory(category.categoryid)}
@@ -92,30 +77,3 @@ export const Categories = (props) => {
     </div>
   );
 };
-
-// const categories = [
-//   {
-//     categoryid: 1,
-//     categoryname: "Food",
-//     description: "This is a food",
-//     createdat: "2024-09-26T19:56:35.338Z",
-//     updatedat: "2024-09-26T19:56:35.338Z",
-//     category_img: "Icon",
-//     selected:true
-//   },
-// ];
-
-// const categories = response.data.categories.map((category) => {
-//   return {
-//     ...category,
-//     selected: true,
-//   };
-
-// const numbers = [1, 1, 2];
-
-// const filteredNumbers = numbers.filter((number) => {
-//   const category = formattedCategories.find(
-//     (category) => category.id === number.categoryId
-//   );
-//   return category.selected;
-// });

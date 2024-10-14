@@ -13,6 +13,8 @@ const AddRecord = (props) => {
   const [categoryId, setCategoryId] = useState([]);
   const [recordName, setRecordName] = useState("");
 
+  useEffect(() => getRecords(), []);
+
   const getCategories = () => {
     axios
       .get("http://localhost:8000/category")
@@ -40,14 +42,14 @@ const AddRecord = (props) => {
         categoryID: selectedCategory,
       })
       .then(function (response) {
-        console.log(response.data.data.length);
+        setRecordName(response.data.data);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
 
-  useEffect(() => getCategories(), []);
+  useEffect(() => getCategories(), [recordName]);
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
@@ -71,8 +73,8 @@ const AddRecord = (props) => {
   };
 
   const handleAdd = () => {
-    onCloseModal();
     postTransaction();
+    onCloseModal();
     getRecords();
   };
 

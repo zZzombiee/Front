@@ -1,40 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import PlusSign from "../../public/Icons/PlusSign";
-import Shopping from "../../public/Icons/Shopping";
-import Taxi from "../../public/Icons/Taxi";
-const categoryURL = "http://localhost:8000/category";
-import FoodExpense from "../../public/Icons/FoodExpenseIcon";
-import RentIcon from "../../public/Icons/RentIcon";
-import Drink from "../../public/Icons/Drink";
-import Gift from "../../public/Icons/Gift";
+import icons from "../util/findCategoryIcon";
 
-const icons = [
-  {
-    image: <RentIcon />,
-    name: "Lending & Renting",
-  },
-  {
-    image: <FoodExpense />,
-    name: "Food & Drinks",
-  },
-  {
-    image: <Shopping />,
-    name: "Shopping",
-  },
-  {
-    image: <Drink />,
-    name: "Drink",
-  },
-  {
-    image: <Gift />,
-    name: "Gift",
-  },
-  {
-    image: <Taxi />,
-    name: "Vehicle",
-  },
-];
+const categoryURL = "http://localhost:8000/category";
 
 const AddCategory = (props) => {
   const { getCategories } = props;
@@ -73,10 +42,11 @@ const AddCategory = (props) => {
           <label className="flex gap-4">
             <select
               className="bg-[#F9FAFB] py-3 w-20 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
-              defaultValue="selected"
+              value={img}
               onChange={(e) => setImg(e.target.value)}
+              aria-label="Select Icon"
             >
-              <option value="selected" disabled selected>
+              <option value="" disabled>
                 Icons
               </option>
               {icons.map((icon, index) => (
@@ -84,14 +54,14 @@ const AddCategory = (props) => {
                   {icon.name}
                 </option>
               ))}
-              {/* <option value="shopping">Shopping</option>
-              <option value="taxi">Taxi</option> */}
             </select>
             <input
-              className="input input-bordered w-full "
+              className="input input-bordered w-full"
               type="text"
               placeholder="Category Name"
+              value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
+              aria-label="Category Name"
             />
           </label>
           <div className="pt-8 modal-action min-w-full">
