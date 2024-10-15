@@ -35,12 +35,16 @@ const Navbar = (props) => {
     <div className="bg-white w-full px-[120px] py-4 flex justify-between max-w-screen-xl">
       <div className="flex gap-6 items-center">
         <Logo />
-        <p className="cursor-pointer"> Dashboard </p>
-        <p className="cursor-pointer"> Records</p>
+        <button className="" onClick={() => router.push("/dashboard")}>
+          Dashboard
+        </button>
+        <button className="" onClick={() => router.push("/")}>
+          Records
+        </button>
       </div>
       <div className="flex items-center gap-6">
         <button
-          className="bg-[#0166FF] py-1.5 px-3 text-white rounded-3xl text-base"
+          className="btn min-h-10 h-10 bg-[#0166FF] hover:bg-[#0130ff] rounded-3xl text-white items-center justify-center"
           onClick={handleAdd}
         >
           + Record

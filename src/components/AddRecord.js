@@ -43,6 +43,7 @@ const AddRecord = (props) => {
       })
       .then(function (response) {
         setRecordName(response.data.data);
+        getRecords();
       })
       .catch(function (error) {
         console.log(error);

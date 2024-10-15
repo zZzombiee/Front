@@ -4,9 +4,9 @@ import { FaChevronLeft, FaAngleRight } from "react-icons/fa6";
 import axios from "axios";
 
 const Records = (prams) => {
-  const { myRecords, categories, getRecords, sort } = prams;
+  const { records, categories, getRecords, sort, sortText } = prams;
 
-  const filteredRecord = myRecords.filter((record) => {
+  const filteredRecord = records.filter((record) => {
     const category = categories.find(
       (category) => category.categoryid === record.categoryid
     );
@@ -37,15 +37,16 @@ const Records = (prams) => {
             <FaAngleRight />
           </div>
         </div>
-        <select className="w-[180px] py-3 px-4 rounded-lg font-semibold text-base text-[#1F2937] border border-[#D1D5DB]">
-          <option value={sort} checked={sort === "new"}>
-            Newest First
-          </option>
-          <option> Latest First </option>
-        </select>
+        <button
+          className=" py-3 px-4 rounded-lg font-semibold text-base bg-[#E5E7EB] text-[#1F2937] border border-[#D1D5DB] btn"
+          value={sort}
+          onClick={sort}
+        >
+          {sortText}
+        </button>
       </div>
       <div className="flex flex-col gap-3">
-        <p className="font-semibold text-base"> Today </p>
+        <p className="font-semibold text-base"> Transactions </p>
         <div className="flex flex-col gap-3 mb-3">
           {filteredRecord.map((record, index) => {
             return (
@@ -60,7 +61,7 @@ const Records = (prams) => {
             );
           })}
         </div>
-        <p className="font-semibold text-base"> Yesterday </p>
+        {/* <p className="font-semibold text-base"> Yesterday </p> */}
       </div>
     </div>
   );

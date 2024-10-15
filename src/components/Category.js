@@ -1,7 +1,5 @@
-import { useState } from "react";
 import EyeIcon from "../../public/Icons/EyeIcon";
 import ClosedEyeIcon from "../../public/Icons/ClosedEyeIcon";
-import axios from "axios";
 
 const Category = (props) => {
   const { categoryName, selected, onSelect, remove } = props;

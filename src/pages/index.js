@@ -7,10 +7,11 @@ import Records from "../components/Records";
 import axios from "axios";
 
 const Home = () => {
-  const [myRecords, setRecords] = useState([]);
+  const [records, setRecords] = useState([]);
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [sort, setSort] = useState("");
+  const [sort, setSort] = useState(true);
+  const [sortText, setSortText] = useState("Newest First");
 
   const hadnleCategories = (category) => {
     setCategories(category);
@@ -19,17 +20,33 @@ const Home = () => {
   const getRecords = () => {
     const userid = localStorage.getItem("userid");
 
-    axios
-      .post("http://localhost:8000/gettransaction", {
-        userID: userid,
-      })
-      .then(function (response) {
-        setRecords(response.data.data);
-        setFilteredRecords(response.data.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (sort === true) {
+      axios
+        .post("http://localhost:8000/gettransaction", {
+          userID: userid,
+        })
+        .then(function (response) {
+          setRecords(response.data.data);
+          setFilteredRecords(response.data.data);
+          setSortText("Latest First");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      axios
+        .post("http://localhost:8000/gettransactionlatest", {
+          userID: userid,
+        })
+        .then(function (response) {
+          setRecords(response.data.data);
+          setFilteredRecords(response.data.data);
+          setSortText("Newest First");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
 
   useEffect(() => getRecords(), [sort]);
@@ -38,30 +55,29 @@ const Home = () => {
   const [selected, setSelected] = useState("All");
 
   const handleExpense = () => {
-    const filtered = myRecords.filter((record) =>
+    const filtered = records.filter((record) =>
       record.transaction_type.includes("EXP")
     );
     setFilteredRecords(filtered);
   };
   const handleIncome = () => {
-    const filtered = myRecords.filter((record) =>
+    const filtered = records.filter((record) =>
       record.transaction_type.includes("INC")
     );
     setFilteredRecords(filtered);
   };
   const handleAll = () => {
-    setFilteredRecords(myRecords);
+    setFilteredRecords(records);
   };
   const handleChange = (option) => {
     setSelected(option);
   };
   const handleSort = (option) => {
-    setSort(option);
+    setSort(!option);
   };
   const handleAdd = () => {
     setShowAdd(!showAdd);
   };
-  console.log(sort);
 
   return (
     <div>
@@ -81,7 +97,7 @@ const Home = () => {
               <p> Records </p>
               <button
                 onClick={() => handleAdd()}
-                className="flex gap-1 w-[225px] bg-[#0166FF] rounded-3xl text-white items-center justify-center"
+                className="flex gap-1 w-[225px] btn min-h-10 h-10 bg-[#0166FF] hover:bg-[#0130ff] rounded-3xl text-white items-center justify-center"
               >
                 <PlusSign color="white" /> Add
               </button>
@@ -131,10 +147,11 @@ const Home = () => {
             />
           </div>
           <Records
-            myRecords={filteredRecords}
+            records={filteredRecords}
             categories={categories}
             getRecords={() => getRecords()}
-            sort={sort}
+            sort={() => handleSort(sort)}
+            sortText={sortText}
           />
         </div>
       </div>

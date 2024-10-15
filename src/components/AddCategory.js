@@ -30,7 +30,7 @@ const AddCategory = (props) => {
   return (
     <div>
       <button
-        className="btn"
+        className="btn w-full h-10 min-h-10"
         onClick={() => document.getElementById("my_modal_2").showModal()}
       >
         <PlusSign color={"#0166FF"} />
