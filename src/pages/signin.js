@@ -18,7 +18,7 @@ const SignIn = () => {
 
   const Login = () => {
     axios
-      .post("http://localhost:8000/signin", {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signin`, {
         email: email,
         password: password,
       })

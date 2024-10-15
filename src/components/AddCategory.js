@@ -3,7 +3,7 @@ import { useState } from "react";
 import PlusSign from "../../public/Icons/PlusSign";
 import icons from "../util/findCategoryIcon";
 
-const categoryURL = "http://localhost:8000/category";
+const categoryURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/category`;
 
 const AddCategory = (props) => {
   const { getCategories } = props;

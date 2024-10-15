@@ -14,7 +14,7 @@ const Navbar = (props) => {
     setUserid(userid);
     if (userid) {
       axios
-        .post(`http://localhost:8000/user`, {
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user`, {
           userid: userid,
         })
         .then(function (response) {

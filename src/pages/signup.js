@@ -26,7 +26,7 @@ const SignUp = () => {
     } else {
       console.log(email, name, password);
       axios
-        .post("http://localhost:8000/signup", {
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signup`, {
           email: email,
           firstName: name,
           password: password,

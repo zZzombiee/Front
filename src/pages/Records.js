@@ -183,7 +183,7 @@ const Records = () => {
     setShowAdd(!showAdd);
   };
   const addRecord = () => {
-    axios.get("http://localhost:8000/transaction", {});
+    axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/transaction`, {});
   };
   // const opacity = showAdd === false ? "opacity-100" : "opacity-100";
   return (

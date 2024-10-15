@@ -15,7 +15,9 @@ const Records = (prams) => {
 
   const removeRecord = (id) => {
     axios
-      .post(`http://localhost:8000/removeTransaction`, { recordid: id })
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/removeTransaction`, {
+        recordid: id,
+      })
       .then(function (response) {
         console.log(response);
         getRecords();

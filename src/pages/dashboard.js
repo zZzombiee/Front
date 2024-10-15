@@ -11,7 +11,7 @@ const Dashboard = () => {
   const getRecords = () => {
     const userid = localStorage.getItem("userid");
     axios
-      .post("http://localhost:8000/gettransaction", {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/gettransaction`, {
         userID: userid,
       })
       .then(function (response) {

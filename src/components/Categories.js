@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Category from "./Category";
 import PlusSign from "../../public/Icons/PlusSign";
 import AddCategory from "./AddCategory";
-const categoryURL = "http://localhost:8000/category";
+const categoryURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/category`;
 
 export const Categories = (props) => {
   const { categories, hadnleCategories } = props;
@@ -29,7 +29,9 @@ export const Categories = (props) => {
 
   const removeCategory = (id) => {
     axios
-      .post(`http://localhost:8000/removeCategory`, { categoryId: id })
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/removeCategory`, {
+        categoryId: id,
+      })
       .then(function (response) {
         console.log(response);
         getCategories();

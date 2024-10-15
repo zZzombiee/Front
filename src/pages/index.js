@@ -16,13 +16,14 @@ const Home = () => {
   const hadnleCategories = (category) => {
     setCategories(category);
   };
+  console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
 
   const getRecords = () => {
     const userid = localStorage.getItem("userid");
 
     if (sort === true) {
       axios
-        .post("http://localhost:8000/gettransaction", {
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/gettransaction`, {
           userID: userid,
         })
         .then(function (response) {
@@ -35,7 +36,7 @@ const Home = () => {
         });
     } else {
       axios
-        .post("http://localhost:8000/gettransactionlatest", {
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/gettransactionlatest`, {
           userID: userid,
         })
         .then(function (response) {
