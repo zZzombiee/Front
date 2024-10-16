@@ -16,7 +16,6 @@ const Home = () => {
   const hadnleCategories = (category) => {
     setCategories(category);
   };
-  console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
 
   const getRecords = () => {
     const userid = localStorage.getItem("userid");
