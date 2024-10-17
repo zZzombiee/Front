@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Category from "./Category";
-import PlusSign from "../../public/Icons/PlusSign";
 import AddCategory from "./AddCategory";
 const categoryURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/category`;
 
@@ -49,7 +48,6 @@ export const Categories = (props) => {
           selected: !category?.selected,
         };
       }
-
       return category;
     });
 

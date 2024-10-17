@@ -20,15 +20,11 @@ const icons = [
   },
   {
     image: <Drink />,
-    name: "Drink",
+    name: "Transportation",
   },
   {
     image: <Gift />,
-    name: "Gift",
-  },
-  {
-    image: <Taxi />,
-    name: "Vehicle",
+    name: "Life & Entertainment",
   },
 ];
 

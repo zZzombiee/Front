@@ -17,7 +17,7 @@ const AddRecord = (props) => {
 
   const getCategories = () => {
     axios
-      .get(`${BACKEND_URL}/category`)
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`)
       .then(function (response) {
         const categoryName = response.data.categories.map(
           (category) => category.categoryname
@@ -33,7 +33,7 @@ const AddRecord = (props) => {
 
   const postTransaction = () => {
     axios
-      .post(`${BACKEND_URL}/transaction`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/transaction`, {
         userID: localStorage.getItem("userid"),
         recordName: selectedCategory,
         amount: amount,

@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Records = (prams) => {
   const { records, categories, getRecords, sort, sortText } = prams;
-
+  const x = "x";
   const filteredRecord = records.filter((record) => {
     const category = categories.find(
       (category) => category.categoryid === record.categoryid
@@ -59,6 +59,7 @@ const Records = (prams) => {
                 amount={record.amount}
                 transaction_type={record.transaction_type}
                 remove={() => removeRecord(record.recordid)}
+                x={x}
               />
             );
           })}

@@ -5,9 +5,13 @@ import Income from "@/components/Income";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import OneRecord from "@/components/OneRecord";
+import currency from "currency.js";
 
 const Dashboard = () => {
   const [records, setRecords] = useState([]);
+  const [incomeAmount, setIncomeAmount] = useState(0);
+  const [expenseAmount, setExpenseAmount] = useState(0);
+
   const getRecords = () => {
     const userid = localStorage.getItem("userid");
     axios
@@ -15,35 +19,72 @@ const Dashboard = () => {
         userID: userid,
       })
       .then(function (response) {
-        console.log(response);
         setRecords(response.data.data);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+
   useEffect(() => getRecords(), []);
+
+  const transaction = () => {
+    const userid = localStorage.getItem("userid");
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/sum`, {
+        userid: userid,
+        transaction_type: "INC",
+      })
+      .then(function (response) {
+        setIncomeAmount(response.data.sumAmount[0].sum);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/sum`, {
+        userid: userid,
+        transaction_type: "EXP",
+      })
+      .then(function (response) {
+        setExpenseAmount(response.data.sumAmount[0].sum);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  useEffect(() => transaction(), [records]);
 
   return (
     <div className="bg-[#F3F4F6] flex flex-col gap-8 items-center h-full">
       <Navbar />
       <div className="flex flex-col gap-6 w-full max-w-screen-xl">
         <div className="flex gap-6">
-          <div className="w-full rounded-[18px] bg-[#0166FF]"></div>
+          <div className="w-full rounded-xl ">
+            <img src="/images/Large.png" />
+          </div>
           <Income
-            color={"#84CC16"}
+            color={"green"}
             title={"Your Income"}
-            money={"1,200,000₮"}
+            money={`+${currency(incomeAmount, {
+              symbol: "",
+              decimal: ",",
+              precision: 0,
+            }).format()}₮`}
             text={"Your Income Amount"}
-            description={"32% from last month"}
+            description={`${""}% from last month`}
             icon={<IncomeLogo />}
           />
           <Income
             color={"#0166FF"}
             title={"Your Expense"}
-            money={"-1,200,000₮"}
+            money={`-${currency(expenseAmount, {
+              symbol: "",
+              decimal: ",",
+              precision: 0,
+            }).format()}₮`}
             text={"Your Expense Amount"}
-            description={"32% from last month"}
+            description={`${""}% from last month`}
             icon={<ExpenseLogo />}
           />
         </div>
@@ -81,7 +122,6 @@ const Dashboard = () => {
               createdat={record.createdat}
               amount={record.amount}
               transaction_type={record.transaction_type}
-              remove={() => removeRecord(record.recordid)}
             />
           );
         })}

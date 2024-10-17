@@ -2,7 +2,7 @@ import { categoryIconByCategoryName } from "@/util/findCategoryIcon";
 import moment from "moment";
 
 const OneRecord = (props) => {
-  const { recordname, createdat, amount, transaction_type, remove } = props;
+  const { recordname, createdat, amount, transaction_type, remove, x } = props;
 
   const icon = categoryIconByCategoryName(props);
 
@@ -45,7 +45,7 @@ const OneRecord = (props) => {
           {symbol}
           {amount} ₮
         </p>
-        <button onClick={remove}>X</button>
+        <button onClick={remove}>{x}</button>
       </div>
     </div>
   );

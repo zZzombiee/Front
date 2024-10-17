@@ -25,7 +25,7 @@ const SignIn = () => {
       .then(function (response) {
         localStorage.setItem("userid", response.data.userData[0].userid);
         console.log(response.data.userData[0]);
-        router.push("/");
+        router.push("/dashboard");
       })
       .catch(function (error) {
         console.log(error);
