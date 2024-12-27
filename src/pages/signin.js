@@ -18,7 +18,7 @@ const SignIn = () => {
 
   const Login = () => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signin`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signIn`, {
         email: email,
         password: password,
       })
