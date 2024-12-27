@@ -28,32 +28,32 @@ const Dashboard = () => {
 
   useEffect(() => getRecords(), []);
 
-  const transaction = () => {
-    const userid = localStorage.getItem("userid");
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/sum`, {
-        userid: userid,
-        transaction_type: "INC",
-      })
-      .then(function (response) {
-        setIncomeAmount(response.data.sumAmount[0].sum);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/sum`, {
-        userid: userid,
-        transaction_type: "EXP",
-      })
-      .then(function (response) {
-        setExpenseAmount(response.data.sumAmount[0].sum);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-  useEffect(() => transaction(), [records]);
+  // const transaction = () => {
+  //   const userid = localStorage.getItem("userid");
+  //   axios
+  //     .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/sum`, {
+  //       userid: userid,
+  //       transaction_type: "INC",
+  //     })
+  //     .then(function (response) {
+  //       setIncomeAmount(response.data.sumAmount[0].sum);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  //   axios
+  //     .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/sum`, {
+  //       userid: userid,
+  //       transaction_type: "EXP",
+  //     })
+  //     .then(function (response) {
+  //       setExpenseAmount(response.data.sumAmount[0].sum);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // };
+  // useEffect(() => transaction(), [records]);
 
   return (
     <div className="bg-[#F3F4F6] flex flex-col gap-8 items-center h-screen">
