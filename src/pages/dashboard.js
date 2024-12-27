@@ -56,12 +56,12 @@ const Dashboard = () => {
   useEffect(() => transaction(), [records]);
 
   return (
-    <div className="bg-[#F3F4F6] flex flex-col gap-8 items-center h-full">
+    <div className="bg-[#F3F4F6] flex flex-col gap-8 items-center h-screen">
       <Navbar />
       <div className="flex flex-col gap-6 w-full max-w-screen-xl">
         <div className="flex gap-6">
           <div className="w-full rounded-xl ">
-            <img src="/images/Large.png" />
+            <img src="../images/Large.png" />
           </div>
           <Income
             color={"green"}

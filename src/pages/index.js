@@ -80,9 +80,9 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="h-screen bg-[#F3F4F6]">
       {showAdd && (
-        <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
+        <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-[#21202057]  flex justify-center items-center">
           <AddRecord
             getRecords={() => getRecords()}
             onCloseModal={() => handleAdd()}
